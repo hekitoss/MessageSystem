@@ -1,8 +1,13 @@
+package server;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class Server {
 
     public static final List<ClientHandler> clients = new ArrayList<>();
@@ -10,14 +15,14 @@ public class Server {
 
     public void start(int port) {
         try (ServerSocket server = new ServerSocket(port)) {
-            System.out.println("Server successfully started, waiting message...");
+            log.info("Server successfully started, waiting message...");
             while (true) {
                 clients.add(new ClientHandler(server.accept()));
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Server successfully stopped");
+            log.info("Server successfully stopped");
         }
     }
 
